@@ -70,7 +70,7 @@ const Index = () => {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[image:var(--gradient-hero)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(173_58%_39%/0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-background/50 backdrop-blur-[2px]" />
         <div className="container relative flex min-h-[85vh] flex-col items-center justify-center py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
