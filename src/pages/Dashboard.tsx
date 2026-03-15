@@ -105,6 +105,39 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, [pingBackend]);
 
+  // Mock data for when backend is offline
+  React.useEffect(() => {
+    if (backendStatus === 'offline') {
+      console.log("[Dashboard] Backend offline. Using mock vitals data.");
+      
+      // Set an initial mock reading immediately
+      setVitals({
+        heartRate: 72 + Math.floor(Math.random() * 5),
+        systolic: 120 + Math.floor(Math.random() * 5),
+        diastolic: 80 + Math.floor(Math.random() * 5),
+        temp: 98.6 + (Math.floor(Math.random() * 5) / 10),
+        spo2: 96 + Math.floor(Math.random() * 4),
+        source: 'Mock Data (Offline)',
+        recordedAt: new Date().toISOString()
+      });
+
+      // Update mock data every 3 seconds
+      const mockInterval = setInterval(() => {
+        setVitals(prev => ({
+          heartRate: 72 + Math.floor(Math.random() * 5),
+          systolic: 120 + Math.floor(Math.random() * 5),
+          diastolic: 80 + Math.floor(Math.random() * 5),
+          temp: 98.6 + (Math.floor(Math.random() * 5) / 10),
+          spo2: 96 + Math.floor(Math.random() * 4),
+          source: 'Mock Data (Offline)',
+          recordedAt: new Date().toISOString()
+        }));
+      }, 3000);
+      
+      return () => clearInterval(mockInterval);
+    }
+  }, [backendStatus]);
+
   return (
     <div>
       <Navbar />
