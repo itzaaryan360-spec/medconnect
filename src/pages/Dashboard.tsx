@@ -115,7 +115,7 @@ const Dashboard = () => {
         heartRate: 72 + Math.floor(Math.random() * 5),
         systolic: 120 + Math.floor(Math.random() * 5),
         diastolic: 80 + Math.floor(Math.random() * 5),
-        temp: 98.6 + (Math.floor(Math.random() * 5) / 10),
+        temp: Number((98.6 + (Math.floor(Math.random() * 5) / 10)).toFixed(1)),
         spo2: 96 + Math.floor(Math.random() * 4),
         source: 'Mock Data (Offline)',
         recordedAt: new Date().toISOString()
@@ -127,7 +127,7 @@ const Dashboard = () => {
           heartRate: 72 + Math.floor(Math.random() * 5),
           systolic: 120 + Math.floor(Math.random() * 5),
           diastolic: 80 + Math.floor(Math.random() * 5),
-          temp: 98.6 + (Math.floor(Math.random() * 5) / 10),
+          temp: Number((98.6 + (Math.floor(Math.random() * 5) / 10)).toFixed(1)),
           spo2: 96 + Math.floor(Math.random() * 4),
           source: 'Mock Data (Offline)',
           recordedAt: new Date().toISOString()
@@ -159,7 +159,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="flex items-baseline gap-1">
-                <p className={`text-4xl font-bold tracking-tight ${vitals?.heartRate ? "text-slate-900" : "text-slate-300"}`}>
+                <p className={`text-4xl font-bold tracking-tight ${vitals?.heartRate ? "text-foreground" : "text-muted-foreground"}`}>
                   {vitals?.heartRate || "--"}
                 </p>
                 <span className="text-sm text-muted-foreground font-medium">bpm</span>
@@ -176,7 +176,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="flex items-baseline gap-1">
-                <p className={`text-4xl font-bold tracking-tight ${vitals?.systolic ? "text-slate-900" : "text-slate-300"}`}>
+                <p className={`text-4xl font-bold tracking-tight ${vitals?.systolic ? "text-foreground" : "text-muted-foreground"}`}>
                   {vitals?.systolic ? `${vitals.systolic}/${vitals.diastolic}` : "--/--"}
                 </p>
                 <span className="text-sm text-muted-foreground font-medium">mmHg</span>
@@ -192,7 +192,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="flex items-baseline gap-1">
-                <p className={`text-4xl font-bold tracking-tight ${vitals?.temp ? "text-slate-900" : "text-slate-300"}`}>
+                <p className={`text-4xl font-bold tracking-tight ${vitals?.temp ? "text-foreground" : "text-muted-foreground"}`}>
                   {vitals?.temp || "--"}
                 </p>
                 <span className="text-sm text-muted-foreground font-medium">°F</span>
@@ -208,7 +208,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="flex items-baseline gap-1">
-                <p className={`text-4xl font-bold tracking-tight ${vitals?.spo2 ? "text-slate-900" : "text-slate-300"}`}>
+                <p className={`text-4xl font-bold tracking-tight ${vitals?.spo2 ? "text-foreground" : "text-muted-foreground"}`}>
                   {vitals?.spo2 || "--"}
                 </p>
                 <span className="text-sm text-muted-foreground font-medium">%</span>
@@ -271,8 +271,8 @@ const Dashboard = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-xl text-gray-600">
-            Go to <Link to="/reports" className="text-blue-600 hover:underline">Reports</Link> to upload medical reports
+          <p className="text-xl text-muted-foreground">
+            Go to <Link to="/reports" className="text-blue-500 hover:text-blue-400 hover:underline">Reports</Link> to upload medical reports
           </p>
         </div>
       </div>
