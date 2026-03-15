@@ -1,0 +1,39 @@
+# Core API
+flask
+flask-cors
+requests
+
+# OCR & Image Processing
+pytesseract
+opencv-python-headless
+numpy
+pillow
+
+# NLP (Optional/Lightweight)
+# spacy is removed to ensure build success on free tier
+setuptools
+wheel
+
+# PDF Extraction
+pdfplumber
+PyPDF2
+
+# AI / LLM
+google-generativeai
+openai
+ollama
+
+# Utilities
+python-dotenv
+
+# Auth
+PyJWT
+
+# Cloud Database + Storage
+supabase
+
+# Production server
+waitress
+
+# Telephony
+twilio
