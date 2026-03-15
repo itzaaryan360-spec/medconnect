@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Sun, Moon, Heart } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -15,6 +15,24 @@ const Navbar = () => {
     { to: '/caretaker', label: 'Caretaker' },
     { to: '/wearable', label: 'Wearable' },
   ];
+
+  const location = useLocation();
+  const [user, setUser] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    import('@/lib/connectCareApi').then((m) => {
+      setUser(m.loadAuthFromStorage());
+    });
+  }, [location.pathname]);
+
+  const handleLogout = () => {
+    import('@/lib/connectCareApi').then((m) => {
+      m.clearAuthFromStorage();
+      setUser(null);
+      // Optional: redirect to home or login
+      window.location.href = import.meta.env.BASE_URL + (import.meta.env.BASE_URL.endsWith('/') ? '' : '/') + 'auth?mode=login';
+    });
+  };
 
   return (
     <nav className={`sticky top-0 z-50 border-b backdrop-blur-md transition-colors duration-300 ${isDark
@@ -66,19 +84,36 @@ const Navbar = () => {
               }`} />
           </button>
 
-          <Link
-            to="/auth?mode=login"
-            className={`hidden sm:block text-sm font-medium px-3 py-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-          >
-            Sign In
-          </Link>
-          <Link
-            to="/auth?mode=signup"
-            className="bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors shadow-sm"
-          >
-            Get Started
-          </Link>
+          {!user ? (
+            <>
+              <Link
+                to="/auth?mode=login"
+                className={`hidden sm:block text-sm font-medium px-3 py-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/auth?mode=signup"
+                className="bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors shadow-sm"
+              >
+                Get Started
+              </Link>
+            </>
+          ) : (
+            <div className="flex items-center gap-3">
+              <span className={`text-sm font-medium hidden sm:block ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Hi, {user.name}
+              </span>
+              <button
+                onClick={handleLogout}
+                className={`text-sm font-medium px-3 py-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

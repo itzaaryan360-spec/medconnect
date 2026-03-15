@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Heart, Mail, Lock, User, ArrowLeft, Shield, UserCheck, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { apiLogin, apiRegister, saveAuthToStorage } from "@/lib/connectCareApi";
+import { apiLogin, apiRegister, saveAuthToStorage, loadAuthFromStorage } from "@/lib/connectCareApi";
 import { supabase, SUPABASE_ENABLED, supabaseSignIn, supabaseSignUp } from "@/lib/supabase";
 
 
@@ -24,6 +24,14 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Check if already logged in on mount
+  useEffect(() => {
+    const user = loadAuthFromStorage();
+    if (user && user.user_id) {
+      navigate(user.role === "CARETAKER" ? "/caretaker" : "/dashboard");
+    }
+  }, [navigate]);
 
   // Extra fields
   const [age, setAge] = useState("");
